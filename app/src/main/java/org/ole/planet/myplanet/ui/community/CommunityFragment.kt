@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.realm.Case
 import io.realm.Sort
-import kotlinx.android.synthetic.main.fragment_community.*
 
 import org.ole.planet.myplanet.R
 import org.ole.planet.myplanet.base.BaseContainerFragment
 import org.ole.planet.myplanet.callback.OnHomeItemClickListener
+import org.ole.planet.myplanet.databinding.FragmentCommunityBinding
 import org.ole.planet.myplanet.datamanager.DatabaseService
 import org.ole.planet.myplanet.model.RealmMyTeam
 import org.ole.planet.myplanet.model.RealmNews
@@ -36,6 +36,8 @@ import org.ole.planet.myplanet.utilities.Utilities
  * A simple [Fragment] subclass.
  */
 class CommunityFragment : BaseContainerFragment(), AdapterNews.OnNewsItemClickListener {
+
+    var binding : FragmentCommunityBinding = FragmentCommunityBinding.inflate(layoutInflater)
     override fun addImage(llImage: LinearLayout?) {
     }
 
@@ -58,7 +60,7 @@ class CommunityFragment : BaseContainerFragment(), AdapterNews.OnNewsItemClickLi
         super.onActivityCreated(savedInstanceState)
         mRealm = DatabaseService(activity!!).realmInstance
         user = UserProfileDbHandler(activity!!).userModel
-        btn_library.setOnClickListener {
+        binding.btnLibrary.setOnClickListener {
             homeItemClickListener.openCallFragment(LibraryFragment())
         }
         val list = mRealm.where(RealmNews::class.java)
@@ -77,9 +79,9 @@ class CommunityFragment : BaseContainerFragment(), AdapterNews.OnNewsItemClickLi
         adapter.setListener(this)
         adapter.setFromLogin(arguments!!.getBoolean("fromLogin", false))
         adapter.setmRealm(mRealm)
-        rv_community.adapter = adapter
+        binding.rvCommunity.adapter = adapter
       //  setFlexBox();
-        ll_edit_delete.visibility = if (user!!.isManager()) View.VISIBLE else View.GONE
+        binding.llEditDelete.visibility = if (user!!.isManager()) View.VISIBLE else View.GONE
 
 
     }
@@ -87,7 +89,7 @@ class CommunityFragment : BaseContainerFragment(), AdapterNews.OnNewsItemClickLi
 
 
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         val orientation = newConfig!!.orientation
         changeLayoutManager(orientation)
@@ -95,9 +97,9 @@ class CommunityFragment : BaseContainerFragment(), AdapterNews.OnNewsItemClickLi
 
     private fun changeLayoutManager(orientation: Int) {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rv_community.layoutManager = GridLayoutManager(activity, 2)
+            binding.rvCommunity.layoutManager = GridLayoutManager(activity, 2)
         } else {
-            rv_community.layoutManager = LinearLayoutManager(activity)
+            binding.rvCommunity.layoutManager = LinearLayoutManager(activity)
         }
     }
 

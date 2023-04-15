@@ -14,11 +14,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.realm.Realm
-import kotlinx.android.synthetic.main.alert_add_link.view.*
-import kotlinx.android.synthetic.main.fragment_add_link.*
 
 import org.ole.planet.myplanet.R
 import org.ole.planet.myplanet.base.BaseContainerFragment
+import org.ole.planet.myplanet.databinding.FragmentAddLinkBinding
 import org.ole.planet.myplanet.datamanager.DatabaseService
 import org.ole.planet.myplanet.model.RealmMyTeam
 import org.ole.planet.myplanet.ui.team.AdapterTeam
@@ -29,6 +28,10 @@ import java.util.*
  * A simple [Fragment] subclass.
  */
 class AddLinkFragment : BottomSheetDialogFragment(), AdapterView.OnItemSelectedListener {
+
+
+    var binding : FragmentAddLinkBinding = FragmentAddLinkBinding.inflate(layoutInflater)
+
     override fun onNothingSelected(p0: AdapterView<*>?) {
     }
 
@@ -40,17 +43,17 @@ class AddLinkFragment : BottomSheetDialogFragment(), AdapterView.OnItemSelectedL
         val query = mRealm.where(RealmMyTeam::class.java)
                 .isEmpty("teamId")
                 .isNotEmpty("name")
-                .equalTo("type", if (spn_link.selectedItem.toString().equals("Enterprises")) "enterprise" else "")
+                .equalTo("type", if (binding.spnLink.selectedItem.toString().equals("Enterprises")) "enterprise" else "")
                 .notEqualTo("status", "archived")
                 .findAll()
-        rv_list.layoutManager = LinearLayoutManager(activity!!)
+        binding.rvList.layoutManager = LinearLayoutManager(activity!!)
         Utilities.log("SIZE ${query}")
         val adapter = AdapterTeam(activity!!, query, mRealm)
         adapter.setTeamSelectedListener { team ->
             this.selectedTeam = team;
             Utilities.toast(activity!!, """Selected ${team.name}""")
         }
-        rv_list.adapter = adapter
+        binding.rvList.adapter = adapter
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -74,10 +77,10 @@ class AddLinkFragment : BottomSheetDialogFragment(), AdapterView.OnItemSelectedL
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mRealm = DatabaseService(activity!!).realmInstance
-        spn_link.onItemSelectedListener = this
-        btn_save.setOnClickListener {
-            var type = spn_link?.selectedItem.toString()
-            var title = et_name?.text.toString()
+        binding.spnLink.onItemSelectedListener = this
+        binding.btnSave.setOnClickListener {
+            var type = binding.spnLink?.selectedItem.toString()
+            var title = binding.etName?.text.toString()
             if (title.isNullOrEmpty()){
                 Utilities.toast(activity!!,"Title is required")
                 return@setOnClickListener

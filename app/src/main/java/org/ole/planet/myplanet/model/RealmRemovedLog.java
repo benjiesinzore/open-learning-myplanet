@@ -1,6 +1,8 @@
 package org.ole.planet.myplanet.model;
 
 
+import android.annotation.SuppressLint;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ public class RealmRemovedLog extends RealmObject {
     private String type;
     private String docId;
 
+    @SuppressLint("SuspiciousIndentation")
     public static void onAdd(Realm mRealm, String type, String userId, String docId) {
       if (!mRealm.isInTransaction()) mRealm.beginTransaction();
         mRealm.where(RealmRemovedLog.class).equalTo("type", type).equalTo("userId", userId).equalTo("docId", docId).findAll().deleteAllFromRealm();

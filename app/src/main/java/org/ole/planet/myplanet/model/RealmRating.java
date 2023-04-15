@@ -1,5 +1,6 @@
 package org.ole.planet.myplanet.model;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -197,6 +198,7 @@ public class RealmRating extends RealmObject {
         isUpdated = updated;
     }
 
+    @SuppressLint("SuspiciousIndentation")
     public static JsonObject serializeRating(RealmRating realm_rating) {
         JsonObject ob = new JsonObject();
         if (realm_rating.get_id()!=null)

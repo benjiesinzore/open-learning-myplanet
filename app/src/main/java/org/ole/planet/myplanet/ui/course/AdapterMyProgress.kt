@@ -10,8 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
-import kotlinx.android.synthetic.main.item_progress.view.*
-import kotlinx.android.synthetic.main.row_my_progress.view.*
 import org.ole.planet.myplanet.R
 
 class AdapterMyProgress(private val context: Context, private val list: JsonArray) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

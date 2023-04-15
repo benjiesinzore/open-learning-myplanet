@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_team_detail.*
 
 import org.ole.planet.myplanet.R
+import org.ole.planet.myplanet.databinding.FragmentTeamDetailBinding
 import org.ole.planet.myplanet.model.RealmMyTeam
 import org.ole.planet.myplanet.service.UserProfileDbHandler
 import org.ole.planet.myplanet.ui.sync.SyncActivity
@@ -25,6 +25,8 @@ import java.util.*
  * A simple [Fragment] subclass.
  */
 class CommunityTabFragment : Fragment() {
+
+    var binding : FragmentTeamDetailBinding = FragmentTeamDetailBinding.inflate(layoutInflater)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_team_detail, container, false)
@@ -36,11 +38,11 @@ class CommunityTabFragment : Fragment() {
         var sParentcode = settings.getString("parentCode", "")
 
         var user = UserProfileDbHandler(activity!!).userModel
-        view_pager.adapter = CommunityPagerAdapter(childFragmentManager, user.planetCode + "@" + sParentcode, false)
-        tab_layout.setupWithViewPager(view_pager)
-        title.text = user.planetCode
-        subtitle.text = TimeUtils.getFormatedDateWithTime(Date().time)
-        ll_action_buttons.visibility = View.GONE
-        tab_layout.setupWithViewPager(view_pager)
+        binding.viewPager.adapter = CommunityPagerAdapter(childFragmentManager, user.planetCode + "@" + sParentcode, false)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.title.text = user.planetCode
+        binding.subtitle.text = TimeUtils.getFormatedDateWithTime(Date().time)
+        binding.llActionButtons.visibility = View.GONE
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 }

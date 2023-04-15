@@ -12,8 +12,8 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.realm.Realm
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_my_progress.*
 import org.ole.planet.myplanet.R
+import org.ole.planet.myplanet.databinding.FragmentMyProgressBinding
 import org.ole.planet.myplanet.datamanager.DatabaseService
 import org.ole.planet.myplanet.model.*
 import org.ole.planet.myplanet.service.UserProfileDbHandler
@@ -23,6 +23,8 @@ import org.ole.planet.myplanet.service.UserProfileDbHandler
  */
 class MyProgressFragment : Fragment() {
 
+
+    var binding : FragmentMyProgressBinding = FragmentMyProgressBinding.inflate(layoutInflater)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_my_progress, container, false)
@@ -50,8 +52,8 @@ class MyProgressFragment : Fragment() {
             submissionMap(submissions, realm, examIds, totalMistakes, obj)
             arr.add(obj)
         }
-        rv_myprogress.layoutManager = LinearLayoutManager(activity!!)
-        rv_myprogress.adapter = AdapterMyProgress(activity!!, arr)
+        binding.rvMyprogress.layoutManager = LinearLayoutManager(activity!!)
+        binding.rvMyprogress.adapter = AdapterMyProgress(activity!!, arr)
     }
 
     private fun submissionMap(submissions: RealmResults<RealmSubmission>, realm: Realm, examIds: List<String>, totalMistakes: Int, obj: JsonObject) {

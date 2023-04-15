@@ -39,7 +39,7 @@ public class AudioRecorderService {
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         myAudioRecorder.setOutputFile(outputFile);
         try {
             myAudioRecorder.prepare();

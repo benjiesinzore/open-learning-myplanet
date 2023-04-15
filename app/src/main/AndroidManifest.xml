@@ -64,7 +64,9 @@
         <activity
             android:name=".ui.library.AddResourceActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.SplashActivity">
+        <activity
+            android:exported="true"
+            android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
