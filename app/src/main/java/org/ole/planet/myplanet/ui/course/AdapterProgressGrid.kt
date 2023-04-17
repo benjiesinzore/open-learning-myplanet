@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
-import kotlinx.android.synthetic.main.row_my_progress_grid.view.*
 import org.ole.planet.myplanet.R
+import org.ole.planet.myplanet.databinding.RowMyProgressGridBinding
 
 class AdapterProgressGrid(private val context: Context, private val list: JsonArray) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v = LayoutInflater.from(context).inflate(R.layout.row_my_progress_grid, parent, false)
-        return ViewHolderMyProgress(v)
+        val binding = RowMyProgressGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolderMyProgress(binding.root)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -38,7 +38,8 @@ class AdapterProgressGrid(private val context: Context, private val list: JsonAr
     }
 
     internal inner class ViewHolderMyProgress(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvProgress: TextView = itemView.tv_progress
+        var binding : RowMyProgressGridBinding = RowMyProgressGridBinding.bind(itemView)
+        var tvProgress: TextView = binding.tvProgress
 
 
     }

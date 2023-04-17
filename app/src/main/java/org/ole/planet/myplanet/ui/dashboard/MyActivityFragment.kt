@@ -12,8 +12,8 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_my_activity.*
 import org.ole.planet.myplanet.R
+import org.ole.planet.myplanet.databinding.FragmentMyActivityBinding
 import org.ole.planet.myplanet.datamanager.DatabaseService
 import org.ole.planet.myplanet.model.RealmOfflineActivity
 import org.ole.planet.myplanet.service.UserProfileDbHandler
@@ -28,6 +28,8 @@ import kotlin.collections.HashMap
  * A simple [Fragment] subclass.
  */
 class MyActivityFragment : Fragment() {
+
+    private var binding : FragmentMyActivityBinding = FragmentMyActivityBinding.inflate(layoutInflater)
     lateinit var realm: Realm;
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,17 +72,17 @@ class MyActivityFragment : Fragment() {
         val dataSet = BarDataSet(entries, "No of login ")
 
         val lineData = BarData(dataSet)
-        chart.setData(lineData)
+        binding.chart.setData(lineData)
         var d = Description()
         d.text = "Login Activity chart"
-        chart.description = d
-        chart.xAxis.valueFormatter = object: ValueFormatter(){
+        binding.chart.description = d
+        binding.chart.xAxis.valueFormatter = object: ValueFormatter(){
             override fun getFormattedValue(value: Float): String {
                 Utilities.log("value ${value.toInt()}")
                 return getMonth(value.toInt())
             }
         }
-        chart.invalidate()
+        binding.chart.invalidate()
 
 
     }

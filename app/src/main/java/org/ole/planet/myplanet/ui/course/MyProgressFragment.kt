@@ -1,6 +1,7 @@
 package org.ole.planet.myplanet.ui.course
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class MyProgressFragment : Fragment() {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var realm = DatabaseService(activity!!).realmInstance

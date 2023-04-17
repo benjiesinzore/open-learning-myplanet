@@ -11,14 +11,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.card_profile_bell.*
-import kotlinx.android.synthetic.main.card_profile_bell.view.*
-import kotlinx.android.synthetic.main.fragment_home_bell.*
-import kotlinx.android.synthetic.main.fragment_home_bell.view.*
-import kotlinx.android.synthetic.main.home_card_courses.view.*
-import kotlinx.android.synthetic.main.home_card_library.view.*
-import kotlinx.android.synthetic.main.home_card_mylife.view.*
-import kotlinx.android.synthetic.main.home_card_teams.view.*
 import org.ole.planet.myplanet.MainApplication
 import org.ole.planet.myplanet.R
 import org.ole.planet.myplanet.base.BaseResourceFragment
@@ -36,21 +28,30 @@ import org.ole.planet.myplanet.ui.team.TeamFragment
 import org.ole.planet.myplanet.utilities.TimeUtils
 import java.util.*
 
+
+import org.ole.planet.myplanet.databinding.CardProfileBinding
+import org.ole.planet.myplanet.databinding.FragmentHomeBellBinding
+import org.ole.planet.myplanet.databinding.HomeCardCoursesBinding
+import org.ole.planet.myplanet.databinding.HomeCardLibraryBinding
+import org.ole.planet.myplanet.databinding.HomeCardMylifeBinding
+import org.ole.planet.myplanet.databinding.HomeCardTeamsBinding
+
 class BellDashboardFragment : BaseDashboardFragment() {
+
+    private var _binding: FragmentHomeBellBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home_bell, container, false)
-        declareElements(view)
-        onLoaded(view)
-        return view
+        _binding = FragmentHomeBellBinding.inflate(inflater, container, false)
+        return _binding!!.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        txt_date.text = TimeUtils.formatDate(Date().time)
-        txt_community_name.text = model.planetCode
+        _binding?.txtDate?.text = TimeUtils.formatDate(Date().time)
+        _binding?.txtCommunityName?.text = model.planetCode
         (activity as DashboardActivity?)?.supportActionBar?.hide()
-        add_resource.setOnClickListener { v: View? -> AddResourceFragment().show(childFragmentManager, "Add Resource") }
+        _binding?.addResource?.setOnClickListener { v: View? -> AddResourceFragment().show(childFragmentManager, "Add Resource") }
         showBadges()
         if (!model.id.startsWith("guest") && TextUtils.isEmpty(model.key) && MainApplication.showHealthDialog) {
             AlertDialog.Builder(activity!!).setMessage("Health record not available, Sync health data?").setPositiveButton("Sync") { dialogInterface: DialogInterface?, i: Int ->
@@ -60,6 +61,7 @@ class BellDashboardFragment : BaseDashboardFragment() {
         }
         // forceDownloadNewsImages();
     }
+
 
     private fun showBadges() {
         ll_badges.removeAllViews()
